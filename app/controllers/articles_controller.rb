@@ -21,6 +21,7 @@ end
 def create
 #render plain: params[:article].inspect
 @article=Article.new(article_params)
+@article.slug=Translit.convert(@article.title, :english).tr('^" "A-Za-z0-9' , '').downcase.gsub(' ','-')
 if @article.save
 redirect_to @article
 else
@@ -30,6 +31,7 @@ end
 
 def update
 @article = Article.find(params[:id])
+@article.slug=Translit.convert(@article.title, :english).tr('^" "A-Za-z0-9' , '').downcase.gsub(' ','-')
 if @article.update(article_params)
 	redirect_to @article
 else
@@ -46,7 +48,7 @@ end
  
 private 
 def article_params
-params.require(:article).permit(:title, :text)
+params.require(:article).permit(:title, :text, :slug)
 end
 
 
