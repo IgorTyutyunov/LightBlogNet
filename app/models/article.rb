@@ -1,7 +1,8 @@
 require 'babosa'
 class Article < ApplicationRecord
 include FriendlyId
-	friendly_id :title, :use => [:slugged]
+friendly_id :title, :use => [:slugged, :history]
+	#friendly_id :title, :use => [:slugged]
  
 	def slug_candidates
 		[
